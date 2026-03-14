@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 from datetime import datetime, timedelta
 today = datetime.now()
 end_date = today
@@ -21,7 +22,19 @@ response = requests.get(api_url) # response 200 = ok, connection successfull
 
 data = response.json()
 
-data.keys()
-weekly_temp = data["daily"]["temperature_2m_max"]
-for temp in weekly_temp:
-    print(f"Temp : {temp} C")
+
+
+daily_data = data["daily"]
+print(daily_data)
+
+# now i am going to format the data in the daily_data
+
+formated_data = pd.DataFrame(
+    {
+        "Date" : daily_data["time"],
+        "Min_Temperature" : daily_data["temperature_2m_min"],
+        "Max_Temperature" : daily_data["temperature_2m_max"]
+    }
+)
+
+print(formated_data)

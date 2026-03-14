@@ -1,5 +1,6 @@
 import requests
 import pandas as pd
+import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 today = datetime.now()
 end_date = today
@@ -38,3 +39,24 @@ formated_data = pd.DataFrame(
 )
 
 print(formated_data)
+
+#create the plot
+plt.figure(figsize = (10,6))
+plt.plot(formated_data["Date"], formated_data["Min_Temperature"], marker ='o', label = "Min Temp")
+plt.plot(formated_data["Date"], formated_data["Max_Temperature"], marker= 'o', label ="Max Temp")
+
+
+
+# Add labels and title
+plt.xlabel('Date')
+plt.ylabel('Temperature (°C)')
+plt.title('Paris Weather - Past 7 Days')
+plt.legend()
+
+# Rotate x-axis labels for readability
+plt.xticks(rotation=45)
+plt.tight_layout()
+
+# Save the plot
+plt.savefig('weather_chart.png')
+plt.show()
